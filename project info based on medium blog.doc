@@ -1,0 +1,40 @@
+Let's break down the steps to set up an EC2 instance on AWS and deploy the "Ask for a Date" app.
+
+Step 1: Set up EC2 on AWS
+
+Launch an Amazon EC2 instance:
+Go to the EC2 console and select "Launch Instance".
+Choose "Ubuntu" as the Amazon Machine Image (AMI).
+Follow the prompts to configure the instance details, such as instance type, storage, and security group.
+Configure security group:
+Make sure to allow inbound traffic on port 80, which is the default port used by HTTP.
+Connect to EC2 via SSH
+
+Use the command ssh -i "mykey.pem" ubuntu@ec2–54–197–62–157.compute-1.amazonaws.com to connect to your EC2 instance.
+Run the following commands
+
+sudo su to switch to the root user.
+apt update to update the package list.
+apt install git to install Git.
+git clone https://github.com/Aakibgithuber/Ask-for-a-date-app.git to clone the GitHub repository.
+Step 2: Set up Nginx and Docker
+
+Install Nginx:
+sudo apt install nginx
+sudo systemctl start nginx to start the Nginx service.
+sudo systemctl enable nginx to enable Nginx to start on boot.
+sudo systemctl status nginx to verify that Nginx is running without any errors.
+Install Docker:
+apt-get install docker.io
+usermod -aG docker $USER to add the current user to the Docker group.
+newgrp docker to apply the changes.
+sudo chmod 777 /var/run/docker.sock to grant full read, write, and execute permissions to all users for the Docker socket file.
+Build and Run Docker Container
+
+docker build -t my-dating-app to build the Docker image.
+docker run -d --name netflix -p 8081:80 my-dating-app:latest to run the Docker container and map the container port to your EC2 port.
+Go to your EC2 instance and add a rule to the security group to open port 8081.
+Access the Application
+
+Copy the public IP of your EC2 instance and browse to http://your_public_ip:8081 to access the application.
+That's it! You should now have the "Ask for a Date" app up and running on your EC2 instance.
